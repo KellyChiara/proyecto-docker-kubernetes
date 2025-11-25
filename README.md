@@ -119,3 +119,28 @@ docker run hello-world
 docker login
 ```
 ![Login](./screenshots/parte1/git-docker/04-login-docker.png)
+
+### 1.5 Obtener y Desplegar proyecto integrador v2.0
+- Descargamos el zip, lo descomprimimos y empezamos a inicializarlo
+
+- Seguimos la guía adjunta [DEPLOYMENT_GUIDE_MICROK8S.md](./proyecto-integrador-docker-k8s/k8s/DEPLOYMENT_GUIDE_MICROK8S.md)
+
+- Verificación microk8s
+```bash
+microk8s status
+```
+![microk8s](./screenshots/parte1/microk8s/01-microk8s-status.png)
+
+- Verificación de recursos desplegados
+```bash
+kubectl get all -n proyecto-integrador
+```
+![recursos desplegados](./screenshots/parte1/microk8s/02-recursos-desplegados.png)
+
+- Vista frontend desde la web con la ip expuesta
+
+![frontend](./screenshots/parte1/microk8s/03-frontend.png)
+
+- Vista backend desde la web con la ip expuesta
+
+![frontend](./screenshots/parte1/microk8s/04-backend.png)
