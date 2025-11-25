@@ -144,3 +144,30 @@ kubectl get all -n proyecto-integrador
 - Vista backend desde la web con la ip expuesta
 
 ![frontend](./screenshots/parte1/microk8s/04-backend.png)
+
+![api users](./screenshots/parte1/microk8s/05-api-users.png)
+
+![health](./screenshots/parte1/microk8s/06-health.png)
+
+![registro usuario](./screenshots/parte1/microk8s/07-registro-usuario.png)
+
+![lista usuarios](./screenshots/parte1/microk8s/08-lista-usuario.png)
+
+## Parte 2: Iteración v2.1 - Modificar Backend
+
+- Generación de un nuevo Endpoint
+
+Agregamos el siguiente codigo, en el archivo [GreetingController.java](./proyecto-integrador-docker-k8s/src/main/java/dev/alefiengo/api/controller/GreetingController.java)
+
+```bash
+@GetMapping("/api/info")
+public ResponseEntity<Map<String, Object>> getInfo() {
+    Map<String, Object> info = new HashMap<>();
+    info.put("alumno", "Kelly Amanda Chiara Flores");
+    info.put("version", "v2.1");
+    info.put("curso", "Docker & Kubernetes - i-Quattro");
+    info.put("timestamp", LocalDateTime.now().toString());
+    info.put("hostname", System.getenv("HOSTNAME"));
+    return ResponseEntity.ok(info);
+}
+```
