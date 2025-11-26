@@ -171,3 +171,35 @@ public ResponseEntity<Map<String, Object>> getInfo() {
     return ResponseEntity.ok(info);
 }
 ```
+![nuevo endpoint](./screenshots/parte2/01-endpoint.png)
+
+- Push a Docker Hub
+```bash
+docker push kellychiara/springboot-api:v2.1
+```
+
+[kellychiara/springboot-api](https://hub.docker.com/r/kellychiara/springboot-api/tags)
+
+- Actualizamos [api-deployment.yaml](./proyecto-integrador-docker-k8s/k8s/05-backend/api-deployment.yaml)
+
+![modificacion de archivo](./screenshots/parte2/02-modificar-archivo.png)
+
+- Aplicación de cambios
+```bash
+kubectl apply -f k8s/05-backend/api-deployment.yaml
+kubectl rollout status deployment/api -n proyecto-integrador
+kubectl get pods -n proyecto-integrador -w
+```
+![aplicación de cambios](./screenshots/parte2/03-cambios.png)
+
+- **Verificación de funcionamiento**
+```bash
+kubectl port-forward -n proyecto-integrador svc/api-service 8080:8080
+
+curl http://localhost:8080/api/info
+```
+![verificación](./screenshots/parte2/04-verificacion.png)
+
+![verificación terminal](./screenshots/parte2/05-verificacion-terminal.png)
+
+![verificación desde la web](./screenshots/parte2/06-verificacion-ip.png)
