@@ -297,3 +297,33 @@ kubectl get pods -n proyecto-integrador -w
 ```
 
 ![pods](./screenshots/parte4/04-recreacion-pods.png)
+
+## Parte 5: Acceso Externo via Ingress
+- Verificar configuración de ingress
+```bash
+kubectl get svc -n ingress
+
+kubectl get ipaddresspool -n metallb-system
+```
+
+![configuración](./screenshots/parte5/01-verificar.png)
+
+- Verificar MetalLB
+```bash
+kubectl get svc -n ingress
+
+kubectl get ipaddresspool -n metallb-system
+```
+
+![MetalLB](./screenshots/parte5/02-metallb.png)
+
+- Probar TODOS los endpoints
+```bash
+curl http://10.1.27.108:8080/
+curl http://10.1.27.108:8080/api/users
+curl http://10.1.27.108:8080/api/greeting
+curl http://10.1.27.108:8080/api/info
+curl http://10.1.27.108:8080/actuator/health
+```
+
+![endpoints](./screenshots/parte5/03-endpoints.png)
