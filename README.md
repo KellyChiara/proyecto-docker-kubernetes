@@ -192,6 +192,8 @@ kubectl get pods -n proyecto-integrador -w
 ```
 ![aplicación de cambios](./screenshots/parte2/03-cambios.png)
 
+![images](./screenshots/parte2/07-images.png)
+
 - **Verificación de funcionamiento**
 ```bash
 kubectl port-forward -n proyecto-integrador svc/api-service 8080:8080
@@ -203,3 +205,52 @@ curl http://localhost:8080/api/info
 ![verificación terminal](./screenshots/parte2/05-verificacion-terminal.png)
 
 ![verificación desde la web](./screenshots/parte2/06-verificacion-ip.png)
+
+## Parte 3: Modificación Frontend
+
+- Modificar frontend Angular
+
+Actualizamos el archivo [app.component.html](./proyecto-integrador-docker-k8s/frontend/src/app/app.component.html)
+
+![codigo agregado](./screenshots/parte3/01-modificar-app.component.png)
+
+Actualizamos el archivo [app.component.ts](./proyecto-integrador-docker-k8s/frontend/src/app/app.component.ts)
+
+![codigo agregado](./screenshots/parte3/02-mod-app-ts.png)
+
+- Build Imagen Frontent v2.2
+```bash
+cd frontend
+docker build -t kellychiara/angular-frontend:v2.2 .
+
+docker push kellychiara/angular-frontend:v2.2
+```
+
+![build](./screenshots/parte3/03-buil-frontend.png)
+
+![push](./screenshots/parte3/04-push.png)
+
+## **Link de la imagen** [kellychiara/angular-frontend](https://hub.docker.com/r/kellychiara/angular-frontend/tags)
+
+- Actualizar deployment
+
+Modificamos el archivo [frontend-deployment.yaml](./proyecto-integrador-docker-k8s/k8s/06-frontend/frontend-deployment.yaml)
+
+![modificación imagen](./screenshots/parte3/05-modificacion-image.png)
+
+- Aplicamos los cambios
+```bash
+kubectl apply -f k8s/06-frontend/frontend-deployment.yaml
+
+kubectl rollout status deployment/frontend -n proyecto-integrador
+
+kubectl get pods -n proyecto-integrador -l app=frontend -w
+```
+
+![aplicación de cambios](./screenshots/parte3/06-cambios.png)
+
+- Verificación del funcionamiento
+
+![vista web](./screenshots/parte3/07-verificacion-web.png)
+
+![click información](./screenshots/parte3/08-click-info.png)
