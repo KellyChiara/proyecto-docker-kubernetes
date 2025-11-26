@@ -327,3 +327,27 @@ curl http://10.1.27.108:8080/actuator/health
 ```
 
 ![endpoints](./screenshots/parte5/03-endpoints.png)
+
+## Validar HPA (Horizontal Pod Autoscaler)
+```bash
+kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -n proyecto-integrador -- /bin/sh -c "while true; do wget -q -O- http://api-service:8080/api/users; done"
+```
+
+![pod busybox](./screenshots/01-pod-busybox.png)
+
+## Verificamos
+```bash
+kubectl get hpa -n proyecto-integrador -w
+```
+
+![verificacion](./screenshots/02-hpa.png)
+
+## Pods adicionales
+```bash
+kubectl get pods -n proyecto-integrador
+```
+
+![verificacion](./screenshots/03-pods-adicionales.png)
+
+## Proceso
+![proceso](./screenshots/04-historial.png)
