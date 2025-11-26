@@ -254,3 +254,46 @@ kubectl get pods -n proyecto-integrador -l app=frontend -w
 ![vista web](./screenshots/parte3/07-verificacion-web.png)
 
 ![click información](./screenshots/parte3/08-click-info.png)
+
+## Parte 4: Gestión de versiones con Rollout
+
+- Ver historial de Rollouts
+```bash
+kubectl rollout history deployment/api -n proyecto-integrador
+
+kubectl rollout history deployment/frontend -n proyecto-integrador
+```
+![historico rollout](./screenshots/parte4/01-historial.png)
+
+- Hacer Rollback a versión anterior
+```bash
+kubectl rollout undo deployment/api -n proyecto-integrador
+
+kubectl rollout status deployment/api -n proyecto-integrador
+
+curl http://10.152.183.123:/api/info
+```
+
+![rollback a version anterior](./screenshots/parte4/02-rollback-anterior.png)
+
+- Volver a la versión 2.1
+```bash
+kubectl rollout history deployment/api -n proyecto-integrador
+
+kubectl rollout undo deployment/api --to-revision=7 -n proyecto-integrador
+
+curl http://10.152.183.123:/api/info
+```
+
+> ### En el caso de revisión=7 ya que es la ultima generada que corresponde a la versión 2.1
+
+![volver versión 2.1](./screenshots/parte4/03-volver-version.png)
+
+- Forzar recreación de Pods
+```bash
+kubectl rollout restart deployment/api -n proyecto-integrador
+
+kubectl get pods -n proyecto-integrador -w
+```
+
+![pods](./screenshots/parte4/04-recreacion-pods.png)
